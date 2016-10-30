@@ -95,8 +95,8 @@ int main(void)
     	while (1) 
 	{
 		/* Calculate Feedforward */
-		duty = 171776/(source_adc+671);
-		offset = Get_Offset(source_adc);
+		duty 	= Get_FeedFoward_Duty(source_adc);
+		offset 	= Get_Offset(source_adc);
 		
 		/* Check for high voltage for No-Load */
 		if (sepic_adc > 710)
