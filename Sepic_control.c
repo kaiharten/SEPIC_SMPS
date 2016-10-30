@@ -13,19 +13,16 @@
 		
 uint8_t Get_FeedForward_Duty(uint16_t adc_val)
 {	
-	uint16_t setpoint	= 645;
-	uint16_t diode		= 26;	
-	
-	uint8_t duty		= ((setpoint + diode)*256)/(adc_val+setpoint+diode); 
-	
+	duty = 171776/(adc_val+671);
 	return duty;
 }
 
 int8_t Get_FeedBack_Correction(uint16_t feedback)
 {
 	static int8_t   correction	= 0;
-	uint16_t setpoint	= 645;
-	int8_t   error		= setpoint - feedback;
+	uint16_t setpoint		= 645;
+	int8_t   error			= setpoint - feedback;
+	
 	if (error >= 45)
 	{
 		correction = 6;
@@ -68,27 +65,28 @@ int8_t Get_FeedBack_Correction(uint16_t feedback)
 uint8_t Get_Offset(uint16_t source_adc)
 {
 	static uint8_t offset = 0;
-			if (source_adc <= 640 && source_adc > 590)
-			{
-				offset = 4;
-			}
-			if (source_adc <= 590 && source_adc > 565)
-			{
-				offset = 6;
-			}
+	
+	if (source_adc <= 640 && source_adc > 590)
+	{
+		offset = 4;
+	}
+	if (source_adc <= 590 && source_adc > 565)
+	{
+		offset = 6;
+	}
 			
-			if (source_adc <= 565 && source_adc > 530)
-			{
-				offset = 7;
-			}
-			if (source_adc <= 530 && source_adc > 510)
-			{
-				offset = 9;
-			}
-			if (source_adc > 715)
-			{
-				offset = 1;
-			}
+	if (source_adc <= 565 && source_adc > 530)
+	{
+		offset = 7;
+	}
+	if (source_adc <= 530 && source_adc > 510)
+	{
+		offset = 9;
+	}
+	if (source_adc > 715)
+	{
+		offset = 1;
+	}
 			
-			return offset;
+	return offset;
 }
